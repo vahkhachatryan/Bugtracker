@@ -1,0 +1,47 @@
+Task 1
+
+Две таблицы
+
+streets
+
+id | name (наименование) | length (длина, км)
+
+houses
+
+id | street_id | tenants (кол-во жителей) | floors (этажность)
+
+ 
+
+Найти: среди улиц, где живёт менее 500 человек, найти 3 самые длинные
+
+Solution:
+	WITH street_population AS (
+	    SELECT 
+		s.id, 
+		s.name, 
+		s.length, 
+		SUM(h.tenants) AS total_tenants
+	    FROM streets s
+	    JOIN houses h ON s.id = h.street_id
+	    GROUP BY s.id, s.name, s.length
+	    HAVING SUM(h.tenants) < 500
+	)
+	SELECT name, length
+	FROM street_population
+	ORDER BY length DESC
+	LIMIT 3;
+
+Task 2
+
+Есть таблица:
+
+team | develper | task_count
+
+Solution:
+	SELECT team, developer, task_count
+	FROM (
+	    SELECT team, developer, task_count,
+		   ROW_NUMBER() OVER (PARTITION BY team ORDER BY task_count DESC) AS rn
+	    FROM your_table
+	) t
+	WHERE rn = 1;

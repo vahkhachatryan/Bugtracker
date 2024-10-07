@@ -1,0 +1,26 @@
+<h2>Task List</h2>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Status</th>
+        <th>Assignee</th>
+        <th>Actions</th>
+    </tr>
+    {% for task in tasks %}
+    <tr>
+        <td>{{ task.id }}</td>
+        <td>{{ task.title }}</td>
+        <td>{{ task.status }}</td>
+        <td>{{ task.assignee_id }}</td>
+        <td>
+            <a href="/tasks/{{ task.id }}">View</a>
+            <a href="/tasks/{{ task.id }}/edit">Edit</a>
+            <form action="/tasks/{{ task.id }}" method="POST" style="display:inline;">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>

@@ -1,0 +1,21 @@
+<form method="POST" action="/task/update/{{ task.id }}">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" value="{{ task.title }}" required>
+
+    <label for="description">Description:</label>
+    <textarea id="description" name="description">{{ task.description }}</textarea>
+
+    <label for="status">Status:</label>
+    <select id="status" name="status">
+        <option value="To do" {% if task.status == 'To do' %}selected{% endif %}>To do</option>
+        <option value="In progress" {% if task.status == 'In progress' %}selected{% endif %}>In progress</option>
+        <option value="Done" {% if task.status == 'Done' %}selected{% endif %}>Done</option>
+    </select>
+
+    <label for="assignee_id">Assignee ID:</label>
+    <input type="number" id="assignee_id" name="assignee_id" value="{{ task.assignee_id }}">
+
+    <button type="submit">Save</button>
+    <a href="/tasks"><button type="button">Cancel</button></a>
+</form>
+
